@@ -79,5 +79,21 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
                     _ContractsApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
+        
+        [Theory]
+        [InlineData(EventTypes.ContractCreatedEvent)]
+        [InlineData(EventTypes.ContractUpdatedEvent)]
+        public void ContractNotAddedToAssetWhenNoUnapprovedContractsAreAvailable(string eventType)
+        {
+            var contractId = Guid.NewGuid();
+            var assetId = Guid.NewGuid();
+            this.Given(g => _ContractsApiFixture.GivenApprovedContractsAreReturned(contractId, assetId))
+                .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
+                .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
+                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
+                .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(_AssetApiFixture.ResponseObject, 
+                    _esFixture.ElasticSearchClient))
+                .BDDfy();
+        }
     }
 }
