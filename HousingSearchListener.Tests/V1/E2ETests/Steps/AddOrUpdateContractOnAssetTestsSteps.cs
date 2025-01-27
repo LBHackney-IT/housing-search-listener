@@ -70,6 +70,6 @@ public class AddOrUpdateContractOnAssetTestsSteps : BaseSteps
             .ConfigureAwait(false);
 
         var assetInIndex = result.Source;
-        assetInIndex.AssetContracts.Should().BeEquivalentTo(new List<Contract>());
+        assetInIndex.AssetContracts.Should().BeNull();
     }
 }
