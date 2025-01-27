@@ -63,5 +63,14 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Steps
             var assetInIndex = result.Source;
             assetInIndex.AssetContracts.Should().BeEquivalentTo(contracts);
         }
+        
+        public async Task ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(QueryableAsset asset, IElasticClient esClient)
+        {
+            var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
+                                       .ConfigureAwait(false);
+
+            var assetInIndex = result.Source;
+            assetInIndex.AssetContracts.Should().BeEquivalentTo(new List<Contract>());
+        }
     }
 }
