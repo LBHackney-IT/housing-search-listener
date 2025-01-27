@@ -37,14 +37,14 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Fixtures
                                      .CreateMany(1).ToList();
             return new PagedResult<Contract> { Results = ResponseObject };
         }
-        
+
         public PagedResult<Contract> GivenApprovedContractsAreReturned(Guid contractId, Guid targetId)
         {
             var ResponseObject = _fixture.Build<Contract>()
                 .With(x => x.Id, contractId.ToString())
                 .With(x => x.TargetId, targetId.ToString())
                 .With(x => x.TargetType, "asset")
-                .With(x => x.ApprovalStatus, "Approve")
+                .With(x => x.ApprovalStatus, "Approved")
                 .CreateMany(2).ToList();
             return new PagedResult<Contract> { Results = ResponseObject };
         }

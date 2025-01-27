@@ -65,7 +65,7 @@ namespace HousingSearchListener.V1.UseCase
             var allFilteredContracts = allContracts.Results.Where(x => x?.ApprovalStatus != "Approved").Where(x => x?.EndReason != "ContractNoLongerNeeded");
 
             // 4. Cycle over them to retrieve data 
-            var assetContracts = new List<QueryableAssetContract>(); 
+            var assetContracts = new List<QueryableAssetContract>();
             foreach (var assetContract in allFilteredContracts)
             {
                 _logger.LogInformation($"Contract with id {assetContract.Id} being added to asset");
@@ -127,13 +127,13 @@ namespace HousingSearchListener.V1.UseCase
                 }
                 assetContracts.Add(queryableAssetContract);
             }
-            
+
             asset.AssetContracts = assetContracts;
-            
+
             // 5. Update the indexes
             await UpdateAssetIndexAsync(asset);
         }
-        
+
         private async Task UpdateAssetIndexAsync(QueryableAsset asset)
         {
             var esAsset = await _esGateway.GetAssetById(asset.Id.ToString()).ConfigureAwait(false);

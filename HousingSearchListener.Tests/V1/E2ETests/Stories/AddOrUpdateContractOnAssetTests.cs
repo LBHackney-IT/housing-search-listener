@@ -79,7 +79,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
                     _ContractsApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
-        
+
         [Theory]
         [InlineData(EventTypes.ContractCreatedEvent)]
         [InlineData(EventTypes.ContractUpdatedEvent)]
@@ -91,7 +91,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
                 .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
                 .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
                 .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
-                .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(_AssetApiFixture.ResponseObject, 
+                .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(_AssetApiFixture.ResponseObject,
                     _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
