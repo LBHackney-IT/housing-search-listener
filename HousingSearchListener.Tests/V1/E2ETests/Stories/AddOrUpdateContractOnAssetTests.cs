@@ -82,7 +82,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
         [Theory]
         [InlineData(EventTypes.ContractCreatedEvent)]
         [InlineData(EventTypes.ContractUpdatedEvent)]
-        public void ContractNotAddedToAssetWhenNoUnapprovedContractsAreAvailable(string eventType)
+        public void ContractNotAddedToAssetWhenNoUnapprovedContractsArePresent(string eventType)
         {
             var contractId = Guid.NewGuid();
             var assetId = Guid.NewGuid();
