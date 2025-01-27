@@ -1,76 +1,75 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FluentAssertions;
+using Hackney.Shared.HousingSearch.Domain.Contract;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using HousingSearchListener.V1.Infrastructure.Exceptions;
 using Nest;
-using System;
-using System.Threading.Tasks;
-using Hackney.Shared.HousingSearch.Domain.Contract;
 using EventTypes = HousingSearchListener.V1.Boundary.EventTypes;
-using System.Linq;
-using System.Collections.Generic;
 
-namespace HousingSearchListener.Tests.V1.E2ETests.Steps
+namespace HousingSearchListener.Tests.V1.E2ETests.Steps;
+
+public class AddOrUpdateContractOnAssetTestsSteps : BaseSteps
 {
-    public class AddOrUpdateContractOnAssetTestsSteps : BaseSteps
+    public AddOrUpdateContractOnAssetTestsSteps()
     {
-        public AddOrUpdateContractOnAssetTestsSteps()
-        {
-            _eventType = EventTypes.ContractCreatedEvent;
-        }
+        _eventType = EventTypes.ContractCreatedEvent;
+    }
 
-        public async Task WhenTheFunctionIsTriggered(Guid contractId, string eventType, string targetType)
-        {
-            var eventMsg = CreateEvent(contractId, eventType, targetType);
-            await TriggerFunction(CreateMessage(eventMsg));
-        }
+    public async Task WhenTheFunctionIsTriggered(Guid contractId, string eventType, string targetType)
+    {
+        var eventMsg = CreateEvent(contractId, eventType, targetType);
+        await TriggerFunction(CreateMessage(eventMsg));
+    }
 
-        public void ThenAContractNotFoundExceptionIsThrown(Guid id)
-        {
-            _lastException.Should().NotBeNull();
-            _lastException.Should().BeOfType(typeof(EntityNotFoundException<Contract>));
-            (_lastException as EntityNotFoundException<Contract>).Id.Should().Be(id);
-        }
+    public void ThenAContractNotFoundExceptionIsThrown(Guid id)
+    {
+        _lastException.Should().NotBeNull();
+        _lastException.Should().BeOfType(typeof(EntityNotFoundException<Contract>));
+        (_lastException as EntityNotFoundException<Contract>).Id.Should().Be(id);
+    }
 
-        public void ThenAnAssetNotFoundExceptionIsThrown(Guid id)
-        {
-            _lastException.Should().NotBeNull();
-            _lastException.Should().BeOfType(typeof(EntityNotFoundException<QueryableAsset>));
-            (_lastException as EntityNotFoundException<QueryableAsset>).Id.Should().Be(id);
-        }
+    public void ThenAnAssetNotFoundExceptionIsThrown(Guid id)
+    {
+        _lastException.Should().NotBeNull();
+        _lastException.Should().BeOfType(typeof(EntityNotFoundException<QueryableAsset>));
+        (_lastException as EntityNotFoundException<QueryableAsset>).Id.Should().Be(id);
+    }
 
-        public void ThenAnArgumentExceptionIsThrown()
-        {
-            _lastException.Should().NotBeNull();
-            _lastException.Should().BeOfType(typeof(ArgumentException));
-        }
+    public void ThenAnArgumentExceptionIsThrown()
+    {
+        _lastException.Should().NotBeNull();
+        _lastException.Should().BeOfType(typeof(ArgumentException));
+    }
 
-        public async Task ThenTheAssetInTheIndexIsUpdatedWithTheContract(
-            QueryableAsset asset, Contract contract, IElasticClient esClient)
-        {
-            var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
-                                       .ConfigureAwait(false);
+    public async Task ThenTheAssetInTheIndexIsUpdatedWithTheContract(
+        QueryableAsset asset, Contract contract, IElasticClient esClient)
+    {
+        var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
+            .ConfigureAwait(false);
 
-            var assetInIndex = result.Source;
-            assetInIndex.AssetContracts.First().Should().BeEquivalentTo(contract);
-        }
+        var assetInIndex = result.Source;
+        assetInIndex.AssetContracts.First().Should().BeEquivalentTo(contract);
+    }
 
-        public async Task ThenTheAssetInTheIndexIsUpdatedWithTheContracts(
-            QueryableAsset asset, IEnumerable<Contract> contracts, IElasticClient esClient)
-        {
-            var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
-                                       .ConfigureAwait(false);
+    public async Task ThenTheAssetInTheIndexIsUpdatedWithTheContracts(
+        QueryableAsset asset, IEnumerable<Contract> contracts, IElasticClient esClient)
+    {
+        var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
+            .ConfigureAwait(false);
 
-            var assetInIndex = result.Source;
-            assetInIndex.AssetContracts.Should().BeEquivalentTo(contracts);
-        }
-        
-        public async Task ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(QueryableAsset asset, IElasticClient esClient)
-        {
-            var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
-                                       .ConfigureAwait(false);
+        var assetInIndex = result.Source;
+        assetInIndex.AssetContracts.Should().BeEquivalentTo(contracts);
+    }
 
-            var assetInIndex = result.Source;
-            assetInIndex.AssetContracts.Should().BeEquivalentTo(new List<Contract>());
-        }
+    public async Task ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(QueryableAsset asset, IElasticClient esClient)
+    {
+        var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
+            .ConfigureAwait(false);
+
+        var assetInIndex = result.Source;
+        assetInIndex.AssetContracts.Should().BeEquivalentTo(new List<Contract>());
     }
 }
