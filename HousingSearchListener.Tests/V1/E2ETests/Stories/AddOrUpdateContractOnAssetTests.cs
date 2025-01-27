@@ -48,7 +48,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
                 _disposed = true;
             }
         }
-        
+
         [Theory]
         [InlineData(EventTypes.ContractCreatedEvent)]
         [InlineData(EventTypes.ContractUpdatedEvent)]
