@@ -50,7 +50,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
         }
 
         [Theory]
-        // [InlineData(EventTypes.ContractCreatedEvent)]
+        [InlineData(EventTypes.ContractCreatedEvent)]
         [InlineData(EventTypes.ContractUpdatedEvent)]
         public void AssetNotFound(string eventType)
         {
