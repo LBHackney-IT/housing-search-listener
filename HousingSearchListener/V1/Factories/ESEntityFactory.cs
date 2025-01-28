@@ -224,6 +224,9 @@ namespace HousingSearchListener.V1.Factories
                 assetManagement.Owner = asset.AssetManagement.Owner;
                 assetManagement.PropertyOccupiedStatus = asset.AssetManagement.PropertyOccupiedStatus;
                 assetManagement.IsTemporaryAccomodation = asset.AssetManagement.IsTemporaryAccomodation;
+                assetManagement.IsTemporaryAccommodationBlock = asset.AssetManagement.IsTemporaryAccommodationBlock;
+                assetManagement.TemporaryAccommodationParentAssetId = asset.AssetManagement.TemporaryAccommodationParentAssetId;
+                assetManagement.IsPartOfTemporaryAccommodationBlock = asset.AssetManagement.IsPartOfTemporaryAccommodationBlock;
 
                 queryableAsset.AssetManagement = assetManagement;
             }
