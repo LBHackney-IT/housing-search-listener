@@ -61,7 +61,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
                 .Then(t => _steps.ThenAnAssetNotFoundExceptionIsThrown(assetId))
                 .BDDfy();
         }
-        
+
         [Theory]
         [InlineData(EventTypes.ContractCreatedEvent)]
         public void AssetNotFoundWhenContractCreated(string eventType)
