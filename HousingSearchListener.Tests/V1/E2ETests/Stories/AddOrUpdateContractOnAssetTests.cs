@@ -75,37 +75,37 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
         //         .Then(t => _steps.ThenAnAssetNotFoundExceptionIsThrown(assetId))
         //         .BDDfy();
         // }
-        //
-        // [Theory]
-        // [InlineData(EventTypes.ContractCreatedEvent)]
-        // [InlineData(EventTypes.ContractUpdatedEvent)]
-        // public void ContractAddedToAsset(string eventType)
-        // {
-        //     var contractId = Guid.NewGuid();
-        //     var assetId = Guid.NewGuid();
-        //     this.Given(g => _ContractsApiFixture.GivenMultipleContractsAreReturned(contractId, assetId))
-        //         .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
-        //         .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
-        //         .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
-        //         .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedWithTheContracts(_AssetApiFixture.ResponseObject,
-        //             _ContractsApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
-        //         .BDDfy();
-        // }
 
         [Theory]
         [InlineData(EventTypes.ContractCreatedEvent)]
         [InlineData(EventTypes.ContractUpdatedEvent)]
-        public void ContractNotAddedToAssetWhenNoUnapprovedContractsArePresent(string eventType)
+        public void ContractAddedToAsset(string eventType)
         {
             var contractId = Guid.NewGuid();
             var assetId = Guid.NewGuid();
-            // this.Given(g => _ContractsApiFixture.GivenApprovedContractsAreReturned(contractId, assetId))
-            this.Given(g => _AssetApiFixture.GivenTheAssetExists(assetId))
+            this.Given(g => _ContractsApiFixture.GivenMultipleContractsAreReturned(contractId, assetId))
+                .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
                 .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
                 .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
-                .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(_AssetApiFixture.ResponseObject,
-                    _esFixture.ElasticSearchClient))
+                .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedWithTheContracts(_AssetApiFixture.ResponseObject,
+                    _ContractsApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
+
+        // [Theory]
+        // [InlineData(EventTypes.ContractCreatedEvent)]
+        // [InlineData(EventTypes.ContractUpdatedEvent)]
+        // public void ContractNotAddedToAssetWhenNoUnapprovedContractsArePresent(string eventType)
+        // {
+        //     var contractId = Guid.NewGuid();
+        //     var assetId = Guid.NewGuid();
+        //     this.Given(g => _ContractsApiFixture.GivenApprovedContractsAreReturned(contractId, assetId))
+        //         .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
+        //         .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
+        //         .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
+        //         .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(_AssetApiFixture.ResponseObject,
+        //             _esFixture.ElasticSearchClient))
+        //         .BDDfy();
+        // }
     }
 }
