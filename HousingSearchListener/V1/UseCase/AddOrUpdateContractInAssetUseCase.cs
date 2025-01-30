@@ -42,8 +42,7 @@ namespace HousingSearchListener.V1.UseCase
 
             // 1. Turns out, I still need to get Contract from Contract service API, as the message doesn't contain the assetId as we assumed
             var contract = await _contractApiGateway.GetContractByIdAsync(message.EntityId, message.CorrelationId)
-                                                .ConfigureAwait(false);
-            if (contract is null) throw new EntityNotFoundException<Contract>(message.EntityId);
+                                                .ConfigureAwait(false) ?? throw new EntityNotFoundException<Contract>(message.EntityId);
 
             // 2. Determine the Contract is for an Asset.
             if (!contract.TargetType.ToLower().Equals("asset"))
