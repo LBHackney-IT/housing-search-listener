@@ -49,18 +49,18 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
             }
         }
 
-        // [Theory]
-        // [InlineData(EventTypes.ContractCreatedEvent)]
-        // [InlineData(EventTypes.ContractUpdatedEvent)]
-        // public void ContractNotFound(string eventType)
-        // {
-        //     var contractId = Guid.NewGuid();
-        //     var assetId = Guid.NewGuid();
-        //     this.Given(g => _ContractApiFixture.GivenTheContractDoesNotExist(contractId))
-        //         .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
-        //         .Then(t => _steps.ThenAContractNotFoundExceptionIsThrown(contractId))
-        //         .BDDfy();
-        // }
+        [Theory]
+        [InlineData(EventTypes.ContractCreatedEvent)]
+        [InlineData(EventTypes.ContractUpdatedEvent)]
+        public void ContractNotFound(string eventType)
+        {
+            var contractId = Guid.NewGuid();
+            var assetId = Guid.NewGuid();
+            this.Given(g => _ContractApiFixture.GivenTheContractDoesNotExist(contractId))
+                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
+                .Then(t => _steps.ThenAContractNotFoundExceptionIsThrown(contractId))
+                .BDDfy();
+        }
 
         [Theory]
         [InlineData(EventTypes.ContractUpdatedEvent)]
