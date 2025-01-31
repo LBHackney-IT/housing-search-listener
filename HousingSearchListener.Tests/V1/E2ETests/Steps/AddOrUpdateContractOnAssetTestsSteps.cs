@@ -27,7 +27,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Steps
         public void ThenAContractNotFoundExceptionIsThrown(Guid id)
         {
             _lastException.Should().NotBeNull();
-            _lastException.Message.Should().Be($"Contract with id {id} not found");
+            _lastException.Message.Should().Be($"Contract with id {id} not found.");
             _lastException.Should().BeOfType(typeof(EntityNotFoundException<Hackney.Shared.HousingSearch.Domain.Asset.Contract>));
             (_lastException as EntityNotFoundException<Hackney.Shared.HousingSearch.Domain.Asset.Contract>).Id.Should().Be(id);
         }
@@ -35,7 +35,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Steps
         public void ThenAnAssetNotFoundExceptionIsThrown(Guid id)
         {
             _lastException.Should().NotBeNull();
-            _lastException.Message.Should().Be($"QueryableAsset with id {id} not found");
+            _lastException.Message.Should().Be($"QueryableAsset with id {id} not found.");
             _lastException.Should().BeOfType(typeof(EntityNotFoundException<QueryableAsset>));
             (_lastException as EntityNotFoundException<QueryableAsset>).Id.Should().Be(id);
         }
