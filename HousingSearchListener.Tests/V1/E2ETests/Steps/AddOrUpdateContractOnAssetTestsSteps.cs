@@ -35,7 +35,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Steps
         public void ThenAnAssetNotFoundExceptionIsThrown(Guid id)
         {
             _lastException.Should().NotBeNull();
-            _lastException.Message.Should().Be($"Asset with id {id} not found");
+            _lastException.Message.Should().Be($"QueryableAsset with id {id} not found");
             _lastException.Should().BeOfType(typeof(EntityNotFoundException<QueryableAsset>));
             (_lastException as EntityNotFoundException<QueryableAsset>).Id.Should().Be(id);
         }
