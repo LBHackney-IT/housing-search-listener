@@ -40,14 +40,9 @@ namespace HousingSearchListener.V1.UseCase
         {
             if (message is null) throw new ArgumentNullException(nameof(message));
 
-
-            Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
             // 1. Turns out, I still need to get Contract from Contract service API, as the message doesn't contain the assetId as we assumed
             var contract = await _contractApiGateway.GetContractByIdAsync(message.EntityId, message.CorrelationId)
                                                 .ConfigureAwait(false) ?? throw new EntityNotFoundException<Contract>(message.EntityId);
-
-
 
             // 2. Determine the Contract is for an Asset.
             if (!contract.TargetType.ToLower().Equals("asset"))
@@ -64,7 +59,9 @@ namespace HousingSearchListener.V1.UseCase
                                                 .ConfigureAwait(false) ?? throw new EntityNotFoundException<QueryableAsset>(assetId);
 
             // 3. Get all contracts from Contract API
-            var allContracts = await _contractApiGateway.GetContractsByAssetIdAsync(assetId, message.CorrelationId).ConfigureAwait(false) ?? throw new EntityNotFoundException<List<Hackney.Shared.HousingSearch.Domain.Contract.Contract>>(assetId);
+            var allContracts = await _contractApiGateway.GetContractsByAssetIdAsync(assetId, message.CorrelationId).ConfigureAwait(false)
+                               // ?? throw new EntityNotFoundException<List<Hackney.Shared.HousingSearch.Domain.Contract.Contract>>(assetId);
+                               ?? throw new EntityNotFoundException<List<Hackney.Shared.HousingSearch.Domain.Contract.Contract>>(assetId);
 
             var allFilteredContracts = allContracts.Results.Where(x => x?.ApprovalStatus != "Approved").Where(x => x?.EndReason != "ContractNoLongerNeeded");
 
