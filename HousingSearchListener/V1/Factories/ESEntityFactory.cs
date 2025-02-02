@@ -164,6 +164,8 @@ namespace HousingSearchListener.V1.Factories
             QueryableAssetManagement assetManagement = new QueryableAssetManagement();
             QueryableAssetLocation assetLocation = new QueryableAssetLocation();
             List<QueryableAssetContract> queryableAssetContracts = new List<QueryableAssetContract>();
+            List<QueryableCharges> queryableCharges = new List<QueryableCharges>();
+            List<QueryableRelatedPeople> queryableRelatedPeople = new List<QueryableRelatedPeople>();
 
             queryableAsset.Id = asset.Id.ToString();
             queryableAsset.AssetId = asset.AssetId;
@@ -252,7 +254,6 @@ namespace HousingSearchListener.V1.Factories
 
                     if (contract.Charges != null)
                     {
-                        var queryableCharges = new List<QueryableCharges>();
                         foreach (var charge in contract.Charges)
                         {
                             var queryableCharge = new QueryableCharges
@@ -270,7 +271,6 @@ namespace HousingSearchListener.V1.Factories
 
                     if (contract.RelatedPeople != null)
                     {
-                        var queryableRelatedPeople = new List<QueryableRelatedPeople>();
                         foreach (var relatedPerson in contract.RelatedPeople)
                         {
                             var queryableRelatedPerson = new QueryableRelatedPeople
