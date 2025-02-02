@@ -201,7 +201,7 @@ namespace HousingSearchListener.Tests.V1.Factories
             result.ParentAssetIds.Should().Be(domainAsset.ParentAssetIds);
             result.RootAsset.Should().Be(domainAsset.RootAsset);
         }
-        
+
         [Fact]
         public void CreateAssetContractChargesAreMappedCorrectly()
         {
@@ -218,7 +218,7 @@ namespace HousingSearchListener.Tests.V1.Factories
             result.AssetContracts[0].Charges.Should().BeEquivalentTo(domainAsset.AssetContracts[0].Charges);
             result.AssetContracts[1].Charges.Should().BeEquivalentTo(domainAsset.AssetContracts[1].Charges);
         }
-        
+
         [Fact]
         public void CreateAssetContractRelatedPeopleAreMappedCorrectly()
         {
