@@ -193,9 +193,47 @@ namespace HousingSearchListener.Tests.V1.Factories
             result.AssetCharacteristics.NumberOfBedrooms.Should().Be(domainAsset.AssetCharacteristics.NumberOfBedrooms);
             result.AssetCharacteristics.HasPrivateBathroom.Should().Be(domainAsset.AssetCharacteristics.HasPrivateBathroom);
             result.AssetManagement.PropertyOccupiedStatus.Should().Be(domainAsset.AssetManagement.PropertyOccupiedStatus);
+            result.AssetManagement.IsTemporaryAccomodation.Should().Be(domainAsset.AssetManagement.IsTemporaryAccomodation);
+            result.AssetManagement.IsTemporaryAccommodationBlock.Should().Be(domainAsset.AssetManagement.IsTemporaryAccommodationBlock);
+            result.AssetManagement.TemporaryAccommodationParentAssetId.Should().Be(domainAsset.AssetManagement.TemporaryAccommodationParentAssetId);
+            result.AssetManagement.IsPartOfTemporaryAccommodationBlock.Should().Be(domainAsset.AssetManagement.IsPartOfTemporaryAccommodationBlock);
             result.AssetLocation.FloorNo.Should().Be(domainAsset.AssetLocation.FloorNo);
             result.ParentAssetIds.Should().Be(domainAsset.ParentAssetIds);
             result.RootAsset.Should().Be(domainAsset.RootAsset);
+        }
+
+        [Fact]
+        public void CreateAssetContractChargesAreMappedCorrectly()
+        {
+            var contracts = _fixture.Build<QueryableAssetContract>()
+                .With(c => c.TargetType, "asset")
+                .CreateMany(2)
+                .ToList();
+
+            var domainAsset = _fixture.Build<QueryableAsset>()
+                .With(a => a.AssetContracts, contracts).Create();
+
+            var result = _sut.CreateAsset(domainAsset);
+
+            result.AssetContracts[0].Charges.Should().BeEquivalentTo(domainAsset.AssetContracts[0].Charges);
+            result.AssetContracts[1].Charges.Should().BeEquivalentTo(domainAsset.AssetContracts[1].Charges);
+        }
+
+        [Fact]
+        public void CreateAssetContractRelatedPeopleAreMappedCorrectly()
+        {
+            var contracts = _fixture.Build<QueryableAssetContract>()
+                .With(c => c.TargetType, "asset")
+                .CreateMany(2)
+                .ToList();
+
+            var domainAsset = _fixture.Build<QueryableAsset>()
+                .With(a => a.AssetContracts, contracts).Create();
+
+            var result = _sut.CreateAsset(domainAsset);
+
+            result.AssetContracts[0].RelatedPeople.Should().BeEquivalentTo(domainAsset.AssetContracts[0].RelatedPeople);
+            result.AssetContracts[1].RelatedPeople.Should().BeEquivalentTo(domainAsset.AssetContracts[1].RelatedPeople);
         }
 
         [Fact]
