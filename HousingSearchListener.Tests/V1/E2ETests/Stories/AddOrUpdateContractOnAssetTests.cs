@@ -58,7 +58,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
             var assetId = Guid.NewGuid();
             this.Given(g => _ContractApiFixture.GivenTheContractExists(contractId, assetId))
                 .And(g => _AssetApiFixture.GivenTheAssetDoesNotExist(assetId))
-                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
+                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType))
                 .Then(t => _steps.ThenAnAssetNotFoundExceptionIsThrown(assetId))
                 .BDDfy();
         }
@@ -73,7 +73,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
             this.Given(g => _ContractsApiFixture.GivenMultipleContractsAreReturned(contractId, assetId))
                 .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
                 .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
-                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
+                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType))
                 .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedWithTheContracts(_AssetApiFixture.ResponseObject,
                     _ContractsApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
@@ -89,7 +89,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
             this.Given(g => _ContractsApiFixture.GivenApprovedContractsAreReturned(contractId, assetId))
                 .And(g => _AssetApiFixture.GivenTheAssetExists(assetId))
                 .And(g => _esFixture.GivenAnAssetIsIndexed(assetId.ToString()))
-                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType, assetId.ToString()))
+                .When(w => _steps.WhenTheFunctionIsTriggered(contractId, eventType))
                 .Then(t => _steps.ThenTheAssetInTheIndexIsUpdatedAndHasNoContracts(_AssetApiFixture.ResponseObject,
                     _esFixture.ElasticSearchClient))
                 .BDDfy();
