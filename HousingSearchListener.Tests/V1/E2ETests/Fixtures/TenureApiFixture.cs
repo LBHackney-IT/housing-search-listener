@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using Force.DeepCloner;
 using Hackney.Core.Sns;
 using Hackney.Core.Testing.Shared.E2E;

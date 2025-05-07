@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Http;
 using Hackney.Core.Sns;
@@ -88,7 +88,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetTransactionReturnsNullThrows()
         {
             _mockTransactionApi.Setup(x => x.GetTransactionByIdAsync(_message.EntityId, _targetId, _message.CorrelationId))
-                                       .ReturnsAsync((TransactionResponseObject)null);
+                                       .ReturnsAsync((TransactionResponseObject) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<TransactionResponseObject>>();

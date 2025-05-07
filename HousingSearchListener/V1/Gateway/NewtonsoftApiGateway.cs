@@ -1,4 +1,4 @@
-﻿using HousingSearchListener.V1.Infrastructure.Exceptions;
+using HousingSearchListener.V1.Infrastructure.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;

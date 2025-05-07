@@ -1,4 +1,4 @@
-﻿namespace HousingSearchListener.Tests
+namespace HousingSearchListener.Tests
 {
     public static class FixtureConstants
     {

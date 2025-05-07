@@ -1,4 +1,4 @@
-﻿using HousingSearchListener.V1.Domain.Account;
+using HousingSearchListener.V1.Domain.Account;
 using System;
 using System.Threading.Tasks;
 

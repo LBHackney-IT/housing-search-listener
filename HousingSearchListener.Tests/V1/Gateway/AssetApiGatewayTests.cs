@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Http;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;

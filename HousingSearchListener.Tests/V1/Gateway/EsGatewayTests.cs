@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Testing.Shared;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
@@ -77,7 +77,7 @@ namespace HousingSearchListener.Tests.V1.Gateway
             return _fixture.Build<QueryableTenure>()
                            .With(x => x.Id, Guid.NewGuid().ToString())
                            .With(x => x.StartOfTenureDate, DateTime.UtcNow.AddMonths(-10).ToString())
-                           .With(x => x.EndOfTenureDate, (string)null)
+                           .With(x => x.EndOfTenureDate, (string) null)
                            .With(x => x.HouseholdMembers, _fixture.Build<QueryableHouseholdMember>()
                                                                   .With(x => x.Id, Guid.NewGuid().ToString())
                                                                   .With(x => x.DateOfBirth, DateTime.UtcNow.AddYears(-40).ToString(DateFormat))

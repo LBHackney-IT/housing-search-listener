@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Sns;
+using Hackney.Core.Sns;
 using System.Threading.Tasks;
 
 namespace HousingSearchListener.V1.UseCase.Interfaces
