@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Domain.Process;
@@ -103,7 +103,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         [Fact]
         public void ThrowsErrorfIfProcessDoesNotExistInES()
         {
-            _mockEsGateway.Setup(x => x.GetProcessById(It.IsAny<string>())).ReturnsAsync((QueryableProcess)null);
+            _mockEsGateway.Setup(x => x.GetProcessById(It.IsAny<string>())).ReturnsAsync((QueryableProcess) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<QueryableProcess>>();

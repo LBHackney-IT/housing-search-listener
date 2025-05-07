@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
@@ -116,7 +116,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         {
             return _fixture.Build<AccountResponseObject>()
                            .With(x => x.StartDate, DateTime.UtcNow.AddMonths(-6).ToString(DateFormat))
-                           .With(x => x.EndDate, (string)null)
+                           .With(x => x.EndDate, (string) null)
                            .With(x => x.PaymentReference, TheNewPaymentReference)
                            .Create();
         }
@@ -156,7 +156,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetAccountReturnsNullThrows()
         {
             _mockAccountApi.Setup(x => x.GetAccountByIdAsync(_message.EntityId, _message.CorrelationId))
-                                        .ReturnsAsync((AccountResponseObject)null);
+                                        .ReturnsAsync((AccountResponseObject) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<AccountResponseObject>>();
@@ -177,7 +177,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetTenureReturnsNullThrows()
         {
             _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_account.TargetId, _message.CorrelationId))
-                                       .ReturnsAsync((TenureInformation)null);
+                                       .ReturnsAsync((TenureInformation) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<TenureInformation>>();

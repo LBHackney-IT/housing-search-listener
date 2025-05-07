@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Gateways.Models.Persons;
 using Hackney.Shared.HousingSearch.Gateways.Models.Tenures;

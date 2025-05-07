@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Logging;
+using Hackney.Core.Logging;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using Hackney.Shared.HousingSearch.Gateways.Models.Persons;
 using Hackney.Shared.HousingSearch.Gateways.Models.Tenures;

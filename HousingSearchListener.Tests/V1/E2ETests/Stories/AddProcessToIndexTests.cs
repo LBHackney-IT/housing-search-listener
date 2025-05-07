@@ -1,4 +1,4 @@
-﻿using SharedProcess = Hackney.Shared.HousingSearch.Domain.Process;
+using SharedProcess = Hackney.Shared.HousingSearch.Domain.Process;
 using Hackney.Shared.Processes.Domain;
 using HousingSearchListener.Tests.V1.E2ETests.Fixtures;
 using HousingSearchListener.Tests.V1.E2ETests.Steps;

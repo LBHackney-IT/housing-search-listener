@@ -1,4 +1,4 @@
-﻿namespace HousingSearchListener.V1.Domain.Person
+namespace HousingSearchListener.V1.Domain.Person
 {
     public class Tenure
     {

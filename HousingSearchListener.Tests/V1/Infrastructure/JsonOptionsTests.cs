@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Hackney.Core.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;

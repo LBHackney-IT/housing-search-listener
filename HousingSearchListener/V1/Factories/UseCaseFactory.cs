@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Sns;
+using Hackney.Core.Sns;
 using HousingSearchListener.V1.UseCase.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;

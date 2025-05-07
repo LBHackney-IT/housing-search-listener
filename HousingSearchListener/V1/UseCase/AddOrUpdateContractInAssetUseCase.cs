@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Logging;
+using Hackney.Core.Logging;
 using Hackney.Core.Sns;
 using Hackney.Shared.Processes.Sns;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;

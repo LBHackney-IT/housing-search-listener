@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using HousingSearchListener.V1.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +35,7 @@ namespace HousingSearchListener.Tests.V1.Infrastructure
         [Fact]
         public void ConfigureElasticSearchTestNullServicesThrows()
         {
-            Action act = () => ESServiceInitializer.ConfigureElasticSearch((IServiceCollection)null, _mockConfiguration.Object);
+            Action act = () => ESServiceInitializer.ConfigureElasticSearch((IServiceCollection) null, _mockConfiguration.Object);
             act.Should().Throw<ArgumentNullException>();
         }
 

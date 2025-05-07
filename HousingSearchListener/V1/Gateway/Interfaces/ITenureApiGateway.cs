@@ -1,4 +1,4 @@
-﻿using HousingSearchListener.V1.Domain.Tenure;
+using HousingSearchListener.V1.Domain.Tenure;
 using System;
 using System.Threading.Tasks;
 

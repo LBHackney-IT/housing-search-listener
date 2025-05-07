@@ -1,4 +1,4 @@
-﻿using HousingSearchListener.V1.Infrastructure;
+using HousingSearchListener.V1.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

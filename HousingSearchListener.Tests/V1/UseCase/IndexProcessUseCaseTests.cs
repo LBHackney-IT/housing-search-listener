@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Factories;
@@ -97,7 +97,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
             switch (targetType)
             {
                 case TargetType.asset:
-                    _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_process.TargetId, _message.CorrelationId)).ReturnsAsync((QueryableAsset)null);
+                    _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_process.TargetId, _message.CorrelationId)).ReturnsAsync((QueryableAsset) null);
                     return (func) =>
                     {
                         func.Should().ThrowAsync<EntityNotFoundException<QueryableAsset>>();
@@ -105,7 +105,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
                     };
 
                 case TargetType.person:
-                    _mockPersonApi.Setup(x => x.GetPersonByIdAsync(_process.TargetId, _message.CorrelationId)).ReturnsAsync((Person)null);
+                    _mockPersonApi.Setup(x => x.GetPersonByIdAsync(_process.TargetId, _message.CorrelationId)).ReturnsAsync((Person) null);
                     return (func) =>
                     {
                         func.Should().ThrowAsync<EntityNotFoundException<Person>>();
@@ -113,7 +113,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
                     };
 
                 case TargetType.tenure:
-                    _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_process.TargetId, _message.CorrelationId)).ReturnsAsync((TenureInformation)null);
+                    _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_process.TargetId, _message.CorrelationId)).ReturnsAsync((TenureInformation) null);
                     return (func) =>
                     {
                         func.Should().ThrowAsync<EntityNotFoundException<TenureInformation>>();

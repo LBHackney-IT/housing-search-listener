@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using HousingSearchListener.V1.Infrastructure.Exceptions;
 using System;
 using Xunit;

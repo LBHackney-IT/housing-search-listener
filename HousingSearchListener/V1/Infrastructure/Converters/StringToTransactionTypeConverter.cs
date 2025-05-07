@@ -1,4 +1,4 @@
-﻿using Hackney.Shared.HousingSearch.Domain.Transactions;
+using Hackney.Shared.HousingSearch.Domain.Transactions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -25,14 +25,14 @@ namespace HousingSearchListener.V1.Infrastructure.Converters
             {
                 if (field.Name?.ToLower() == description?.ToLower())
                 {
-                    return (TransactionType)field.GetValue(null);
+                    return (TransactionType) field.GetValue(null);
                 }
 
                 if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
                 {
                     if (attribute.Description?.ToLower() == description?.ToLower())
                     {
-                        return (TransactionType)field.GetValue(null);
+                        return (TransactionType) field.GetValue(null);
                     }
                 }
             }

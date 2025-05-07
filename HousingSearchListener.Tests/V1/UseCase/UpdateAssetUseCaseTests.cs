@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
@@ -104,7 +104,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetAssetReturnsNullThrows()
         {
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
-                                       .ReturnsAsync((QueryableAsset)null);
+                                       .ReturnsAsync((QueryableAsset) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<QueryableAsset>>();

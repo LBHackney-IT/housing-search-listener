@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Logging;
+using Hackney.Core.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 using Moq;

@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 namespace HousingSearchListener.V1.Domain.Tenure
 {
@@ -14,7 +14,7 @@ namespace HousingSearchListener.V1.Domain.Tenure
         public override bool Equals(object obj)
         {
             if (GetType() != obj.GetType()) return false;
-            var otherObj = (HouseholdMembers)obj;
+            var otherObj = (HouseholdMembers) obj;
             return Id.Equals(otherObj.Id)
                 && Type.Equals(otherObj.Type)
                 && FullName.Equals(otherObj.FullName)

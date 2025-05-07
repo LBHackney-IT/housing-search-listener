@@ -1,4 +1,4 @@
-﻿namespace HousingSearchListener.V1.UseCase.Interfaces
+namespace HousingSearchListener.V1.UseCase.Interfaces
 {
     public interface IAddPersonToTenureUseCase : IMessageProcessing
     {

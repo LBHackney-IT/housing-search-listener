@@ -1,4 +1,4 @@
-﻿using Hackney.Core.DynamoDb;
+using Hackney.Core.DynamoDb;
 using Hackney.Shared.HousingSearch.Domain.Contract;
 using System;
 using System.Threading.Tasks;

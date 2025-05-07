@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoFixture;
 using Hackney.Core.Testing.Shared.E2E;
 using HousingSearchListener.V1.Domain.Transaction;

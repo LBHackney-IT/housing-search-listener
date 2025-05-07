@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using HousingSearchListener.V1.Factories;
 using HousingSearchListener.V1.Infrastructure.Exceptions;

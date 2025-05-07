@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using Hackney.Core.DynamoDb;
 using Hackney.Core.Testing.Shared.E2E;
 using Hackney.Shared.HousingSearch.Domain.Contract;
