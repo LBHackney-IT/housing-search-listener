@@ -73,15 +73,11 @@ namespace HousingSearchListener.Tests.V1.UseCase
         private QueryableAsset CreateAsset(Guid entityId)
         {
 
-            var chargeId = Guid.NewGuid();
             var charges = _fixture.Build<QueryableCharges>()
-                .With(ch => ch.Frequency, "daily")
-                .With(ch => ch.Id, chargeId.ToString())
+                .With(ch => ch.Frequency, "1")
                 .CreateMany(1).ToList();
 
-            var contractId = Guid.NewGuid();
             var contracts = _fixture.Build<QueryableAssetContract>()
-                        .With(c => c.Id, contractId.ToString())
                         .With(c => c.TargetId, entityId.ToString())
                         .With(c => c.TargetType, "asset")
                         .With(c => c.Charges, charges)
