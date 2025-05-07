@@ -169,6 +169,8 @@ namespace HousingSearchListener.Tests.V1.UseCase
 
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
                 .ReturnsAsync(_asset);
+            _mockContractApi.Setup(x => x.GetContractsByAssetIdAsync(_message.EntityId, _message.CorrelationId))
+                .ReturnsAsync(contracts);                
             _mockEsGateway.Setup(x => x.GetAssetById(_message.EntityId.ToString()))
                 .ReturnsAsync(_asset);
 
