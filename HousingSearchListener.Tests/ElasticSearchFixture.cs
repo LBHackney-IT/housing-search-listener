@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using Elasticsearch.Net;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using Hackney.Shared.HousingSearch.Gateways.Models.Persons;

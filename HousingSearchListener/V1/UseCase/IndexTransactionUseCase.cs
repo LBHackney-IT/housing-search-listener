@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Http;
+using Hackney.Core.Http;
 using Hackney.Core.Logging;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Domain.Transactions;

@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Http;
+using Hackney.Core.Http;
 
 namespace HousingSearchListener.V1.Gateway
 {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Hackney.Core.Logging;
 using HousingSearchListener.V1.Domain.Transaction;

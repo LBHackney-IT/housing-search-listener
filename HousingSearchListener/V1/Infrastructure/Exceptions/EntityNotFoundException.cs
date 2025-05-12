@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace HousingSearchListener.V1.Infrastructure.Exceptions
 {

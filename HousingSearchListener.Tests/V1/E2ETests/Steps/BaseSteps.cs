@@ -1,4 +1,4 @@
-﻿using Amazon.Lambda.Core;
+using Amazon.Lambda.Core;
 using Amazon.Lambda.SQSEvents;
 using Amazon.Lambda.TestUtilities;
 using AutoFixture;

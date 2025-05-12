@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Gateways.Models.Persons;
@@ -90,7 +90,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetPersonReturnsNullThrows()
         {
             _mockPersonApi.Setup(x => x.GetPersonByIdAsync(_message.EntityId, _message.CorrelationId))
-                                       .ReturnsAsync((Person)null);
+                                       .ReturnsAsync((Person) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<Person>>();

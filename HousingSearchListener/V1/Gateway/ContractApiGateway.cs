@@ -1,4 +1,4 @@
-﻿using Hackney.Core.DynamoDb;
+using Hackney.Core.DynamoDb;
 using Hackney.Core.Http;
 using Hackney.Core.Logging;
 using Hackney.Shared.HousingSearch.Domain.Contract;
