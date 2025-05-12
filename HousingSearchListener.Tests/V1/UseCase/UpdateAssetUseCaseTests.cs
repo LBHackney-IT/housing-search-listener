@@ -98,7 +98,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
             {
                 contractList.Add(_fixture.Build<Contract>()
                     .With(x => x.Id, Guid.NewGuid().ToString())
-                    .With(x => x.EndReason, (string)null)
+                    .With(x => x.EndReason, (string) null)
                     .With(x => x.Charges, _fixture.CreateMany<QueryableCharges>(chargesCount).ToList())
                     .With(x => x.RelatedPeople, _fixture.CreateMany<QueryableRelatedPeople>(relatedPeopleCount).ToList())
                     .Create());
