@@ -181,7 +181,6 @@ namespace HousingSearchListener.Tests.V1.UseCase
         {
             var contracts = CreateContracts(contractCount: 1, chargesCount: 2, relatedPeopleCount: 1);
 
-
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
                 .ReturnsAsync(_asset);
             _mockContractApi.Setup(x => x.GetContractsByAssetIdAsync(_message.EntityId, _message.CorrelationId))

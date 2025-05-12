@@ -48,8 +48,7 @@ namespace HousingSearchListener.V1.UseCase
             // 2. Get all the contracts for the asset 
             var allContracts = await _contractApiGateway
                 .GetContractsByAssetIdAsync(message.EntityId, message.CorrelationId)
-                .ConfigureAwait(false)
-                ?? throw new EntityNotFoundException<List<Hackney.Shared.HousingSearch.Domain.Contract.Contract>>(message.EntityId);
+                .ConfigureAwait(false);
 
             var allFilteredContracts = allContracts.Results.Where(x => x?.EndReason != "ContractNoLongerNeeded");
 
