@@ -1,4 +1,4 @@
-﻿using HousingSearchListener.Tests.V1.E2ETests.Fixtures;
+using HousingSearchListener.Tests.V1.E2ETests.Fixtures;
 using HousingSearchListener.Tests.V1.E2ETests.Steps;
 using HousingSearchListener.V1.Boundary;
 using System;

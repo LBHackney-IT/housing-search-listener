@@ -1,4 +1,4 @@
-﻿using Hackney.Shared.HousingSearch.Domain.Process;
+using Hackney.Shared.HousingSearch.Domain.Process;
 using Hackney.Shared.Processes.Sns;
 using HousingSearchListener.Tests.V1.E2ETests.Steps;
 using HousingSearchListener.V1.Boundary;

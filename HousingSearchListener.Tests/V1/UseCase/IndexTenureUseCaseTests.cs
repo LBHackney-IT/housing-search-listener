@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Hackney.Core.Sns;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
@@ -62,10 +62,10 @@ namespace HousingSearchListener.Tests.V1.UseCase
                                     .With(x => x.Tenures,
                                           _fixture.Build<QueryablePersonTenure>()
                                                   .With(y => y.AssetFullAddress, tenure.TenuredAsset.FullAddress)
-                                                  .With(y => y.EndDate, (string)null)
+                                                  .With(y => y.EndDate, (string) null)
                                                   .With(y => y.Id, tenure.Id)
-                                                  .With(y => y.PaymentReference, (string)null)
-                                                  .With(y => y.StartDate, (string)null)
+                                                  .With(y => y.PaymentReference, (string) null)
+                                                  .With(y => y.StartDate, (string) null)
                                                   .With(y => y.Type, tenure.TenureType.Description)
                                                   .CreateMany(1).ToList())
                                     .Create());
@@ -151,7 +151,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetTenureReturnsNullThrows()
         {
             _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_message.EntityId, _message.CorrelationId))
-                                       .ReturnsAsync((TenureInformation)null);
+                                       .ReturnsAsync((TenureInformation) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<TenureInformation>>();
@@ -195,7 +195,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
             _message.EventType = eventType;
 
             _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_message.EntityId, _message.CorrelationId))
-                                       .ReturnsAsync((TenureInformation)null);
+                                       .ReturnsAsync((TenureInformation) null);
 
             _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_message.EntityId, _message.CorrelationId))
                                        .ReturnsAsync(_tenure);

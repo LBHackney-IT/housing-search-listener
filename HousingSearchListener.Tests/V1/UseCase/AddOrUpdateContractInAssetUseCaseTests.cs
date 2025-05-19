@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Force.DeepCloner;
 using Hackney.Core.Sns;
@@ -174,7 +174,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetContractReturnsNullThrows()
         {
             _mockContractApi.Setup(x => x.GetContractByIdAsync(_messageCreated.EntityId, _messageCreated.CorrelationId))
-                                       .ReturnsAsync((Contract)null);
+                                       .ReturnsAsync((Contract) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_messageCreated).ConfigureAwait(false);
             func.Should().ThrowAsync<ArgumentException>();

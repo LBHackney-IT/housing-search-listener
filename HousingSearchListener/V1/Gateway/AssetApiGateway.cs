@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Http;
+using Hackney.Core.Http;
 using Hackney.Core.Logging;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using HousingSearchListener.V1.Gateway.Interfaces;

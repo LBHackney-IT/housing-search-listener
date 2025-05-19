@@ -1,4 +1,4 @@
-﻿using AutoFixture;
+using AutoFixture;
 using FluentAssertions;
 using Force.DeepCloner;
 using Hackney.Core.Sns;
@@ -198,7 +198,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetTenureReturnsNullThrows()
         {
             _mockTenureApi.Setup(x => x.GetTenureByIdAsync(_message.EntityId, _message.CorrelationId))
-                                       .ReturnsAsync((TenureInformation)null);
+                                       .ReturnsAsync((TenureInformation) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<TenureInformation>>();
@@ -222,7 +222,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         {
             var personId = SetMessageEventData(_tenure, _message);
             _mockPersonApi.Setup(x => x.GetPersonByIdAsync(personId, _message.CorrelationId))
-                                       .ReturnsAsync((Person)null);
+                                       .ReturnsAsync((Person) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<Person>>();

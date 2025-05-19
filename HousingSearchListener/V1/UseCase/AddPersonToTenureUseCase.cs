@@ -1,4 +1,4 @@
-﻿using Hackney.Core.Logging;
+using Hackney.Core.Logging;
 using Hackney.Core.Sns;
 using HousingSearchApi.V1.Factories;
 using HousingSearchListener.V1.Domain.Person;

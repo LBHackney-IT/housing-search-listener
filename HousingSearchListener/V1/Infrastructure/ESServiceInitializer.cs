@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Elasticsearch.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-﻿using Hackney.Shared.HousingSearch.Domain.Transactions;
+using Hackney.Shared.HousingSearch.Domain.Transactions;
 using HousingSearchListener.V1.Infrastructure.Converters;
 using Newtonsoft.Json;
 using System;

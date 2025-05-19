@@ -98,7 +98,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
             {
                 contractList.Add(_fixture.Build<Contract>()
                     .With(x => x.Id, Guid.NewGuid().ToString())
-                    .With(x => x.EndReason, (string)null)
+                    .With(x => x.EndReason, (string) null)
                     .With(x => x.Charges, _fixture.CreateMany<QueryableCharges>(chargesCount).ToList())
                     .With(x => x.RelatedPeople, _fixture.CreateMany<QueryableRelatedPeople>(relatedPeopleCount).ToList())
                     .Create());
@@ -138,7 +138,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public void ProcessMessageAsyncTestGetAssetReturnsNullThrows()
         {
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
-                                       .ReturnsAsync((QueryableAsset)null);
+                                       .ReturnsAsync((QueryableAsset) null);
 
             Func<Task> func = async () => await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
             func.Should().ThrowAsync<EntityNotFoundException<QueryableAsset>>();
