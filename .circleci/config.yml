@@ -399,7 +399,7 @@ workflows:
   #           branches:
   #             only: release
 
-deploy-terraform-pre-production:
+  deploy-terraform-pre-production:
     jobs:
       - permit-pre-production-terraform-workflow:
           type: approval
