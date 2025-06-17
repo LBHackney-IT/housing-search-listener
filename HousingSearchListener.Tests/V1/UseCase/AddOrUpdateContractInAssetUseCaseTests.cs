@@ -10,11 +10,9 @@ using HousingSearchListener.V1.Infrastructure.Exceptions;
 using HousingSearchListener.V1.UseCase;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Nest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using EventTypes = HousingSearchListener.V1.Boundary.EventTypes;
@@ -32,8 +30,8 @@ namespace HousingSearchListener.Tests.V1.UseCase
 
         private readonly EntityEventSns _messageCreated;
         private readonly EntityEventSns _messageAsset;
-        private readonly QueryableAsset _Asset;
-        private readonly Contract _Contract;
+        private readonly QueryableAsset _asset;
+        private readonly Contract _contract;
 
         private readonly Fixture _fixture;
         private static readonly Guid _correlationId = Guid.NewGuid();
@@ -53,8 +51,8 @@ namespace HousingSearchListener.Tests.V1.UseCase
 
             _messageAsset = CreateAssetMessage();
             _messageCreated = CreateContractCreatedEventMessage();
-            _Asset = CreateAsset(_messageAsset.EntityId);
-            _Contract = CreateContract(_messageCreated.EntityId);
+            _asset = CreateAsset(_messageAsset.EntityId);
+            _contract = CreateContract(_messageCreated.EntityId);
         }
 
         private EntityEventSns CreateAssetMessage(string eventType = EventTypes.AssetCreatedEvent)
@@ -122,7 +120,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
 
         private bool VerifyAssetIndexed(QueryableAsset esAsset)
         {
-            esAsset.Should().BeEquivalentTo(_esEntityFactory.CreateAsset(_Asset));
+            esAsset.Should().BeEquivalentTo(_esEntityFactory.CreateAsset(_asset));
             return true;
         }
 
@@ -183,7 +181,7 @@ namespace HousingSearchListener.Tests.V1.UseCase
         [Fact]
         public void ProcessMessageAsyncTestIndexContractExceptionThrows()
         {
-            var assetId = SetMessageEventData(_Asset, _messageAsset, true);
+            var assetId = SetMessageEventData(_asset, _messageAsset, true);
             var asset = CreateAsset(assetId.Value);
 
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_messageAsset.EntityId, _messageAsset.CorrelationId))
