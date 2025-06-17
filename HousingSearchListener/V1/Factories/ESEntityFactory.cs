@@ -245,7 +245,8 @@ namespace HousingSearchListener.V1.Factories
                         ApprovalStatusReason = contract.ApprovalStatusReason,
                         IsActive = contract.IsActive,
                         ApprovalDate = contract.ApprovalDate,
-                        StartDate = contract.StartDate
+                        StartDate = contract.StartDate,
+                        Stage = contract.Stage,
                     };
 
                     queryableAssetContracts.Add(queryableContract);

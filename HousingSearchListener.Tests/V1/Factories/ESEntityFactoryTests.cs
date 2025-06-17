@@ -200,6 +200,7 @@ namespace HousingSearchListener.Tests.V1.Factories
             result.AssetLocation.FloorNo.Should().Be(domainAsset.AssetLocation.FloorNo);
             result.ParentAssetIds.Should().Be(domainAsset.ParentAssetIds);
             result.RootAsset.Should().Be(domainAsset.RootAsset);
+            result.AssetContracts.Should().BeEquivalentTo(domainAsset.AssetContracts);
         }
 
         [Fact]
