@@ -1,6 +1,6 @@
 using Hackney.Core.Logging;
 using Hackney.Core.Sns;
-using Hackney.Shared.Processes.Sns;
+using Hackney.Shared.HousingSearch.Domain.Asset;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using Hackney.Shared.HousingSearch.Gateways.Models.Contract;
 using HousingSearchListener.V1.Factories;
@@ -12,8 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HousingSearchApi.V1.Factories;
-using Hackney.Shared.HousingSearch.Domain.Asset;
 
 namespace HousingSearchListener.V1.UseCase
 {
@@ -80,7 +78,8 @@ namespace HousingSearchListener.V1.UseCase
                     ApprovalStatusReason = assetContract.ApprovalStatusReason,
                     IsActive = assetContract.IsActive,
                     ApprovalDate = assetContract.ApprovalDate,
-                    StartDate = assetContract.StartDate
+                    StartDate = assetContract.StartDate,
+                    Stage = assetContract.Stage
                 };
 
                 if (assetContract.Charges.Any())
