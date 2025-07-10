@@ -225,7 +225,7 @@ namespace HousingSearchListener.V1.Factories
                 assetManagement.IsTemporaryAccommodationBlock = asset.AssetManagement.IsTemporaryAccommodationBlock;
                 assetManagement.TemporaryAccommodationParentAssetId = asset.AssetManagement.TemporaryAccommodationParentAssetId;
                 assetManagement.IsPartOfTemporaryAccommodationBlock = asset.AssetManagement.IsPartOfTemporaryAccommodationBlock;
-
+                assetManagement.IsTAWithoutUPRN = asset.AssetManagement.IsTAWithoutUPRN;
                 queryableAsset.AssetManagement = assetManagement;
             }
 

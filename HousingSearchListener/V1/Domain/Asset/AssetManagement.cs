@@ -13,5 +13,6 @@ namespace HousingSearchListener.V1.Domain.Asset
         public bool IsTMOManaged { get; set; }
         public string PropertyOccupiedStatus { get; set; }
         public bool IsNoRepairsMaintenance { get; set; }
+        public bool? IsTAWithoutUPRN { get; set; }
     }
 }
