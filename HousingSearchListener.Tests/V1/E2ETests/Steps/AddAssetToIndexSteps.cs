@@ -18,9 +18,9 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Steps
             _eventType = EventTypes.AssetCreatedEvent;
         }
 
-        public async Task WhenTheFunctionIsTriggered(Guid AssetId, string eventType)
+        public async Task WhenTheFunctionIsTriggered(Guid assetId, string eventType)
         {
-            var eventMsg = CreateEvent(AssetId, eventType);
+            var eventMsg = CreateEvent(assetId, eventType);
             await TriggerFunction(CreateMessage(eventMsg));
         }
 
@@ -32,13 +32,13 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Steps
         }
 
         public async Task ThenTheIndexIsUpdatedWithTheAsset(
-            QueryableAsset Asset, IElasticClient esClient)
+            QueryableAsset asset, IElasticClient esClient)
         {
-            var result = await esClient.GetAsync<QueryableAsset>(Asset.Id, g => g.Index("assets"))
+            var result = await esClient.GetAsync<QueryableAsset>(asset.Id, g => g.Index("assets"))
                                        .ConfigureAwait(false);
 
             var AssetInIndex = result.Source;
-            AssetInIndex.Should().BeEquivalentTo(_entityFactory.CreateAsset(Asset));
+            AssetInIndex.Should().BeEquivalentTo(_entityFactory.CreateAsset(asset));
         }
     }
 }

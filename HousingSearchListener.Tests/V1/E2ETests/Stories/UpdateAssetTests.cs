@@ -15,14 +15,14 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
     public class UpdateAssetTests : IDisposable
     {
         private readonly ElasticSearchFixture _esFixture;
-        private readonly AssetApiFixture _AssetApiFixture;
+        private readonly AssetApiFixture _assetApiFixture;
 
         private readonly AddAssetToIndexSteps _steps;
 
         public UpdateAssetTests(ElasticSearchFixture esFixture)
         {
             _esFixture = esFixture;
-            _AssetApiFixture = new AssetApiFixture();
+            _assetApiFixture = new AssetApiFixture();
 
             _steps = new AddAssetToIndexSteps();
         }
@@ -38,7 +38,7 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
         {
             if (disposing && !_disposed)
             {
-                _AssetApiFixture.Dispose();
+                _assetApiFixture.Dispose();
 
                 _disposed = true;
             }
@@ -49,9 +49,9 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
         public void AssetNotFound(string eventType)
         {
             var AssetId = Guid.NewGuid();
-            this.Given(g => _AssetApiFixture.GivenTheAssetDoesNotExist(AssetId))
+            this.Given(g => _assetApiFixture.GivenTheAssetDoesNotExist(AssetId))
                 .When(w => _steps.WhenTheFunctionIsTriggered(AssetId, eventType))
-                .Then(t => _steps.ThenTheCorrelationIdWasUsedInTheApiCall(_AssetApiFixture.ReceivedCorrelationIds))
+                .Then(t => _steps.ThenTheCorrelationIdWasUsedInTheApiCall(_assetApiFixture.ReceivedCorrelationIds))
                 .Then(t => _steps.ThenAnAssetNotFoundExceptionIsThrown(AssetId))
                 .BDDfy();
         }
@@ -60,11 +60,11 @@ namespace HousingSearchListener.Tests.V1.E2ETests.Stories
         public void AssetUpdateAndAddedToIndex()
         {
             var AssetId = Guid.NewGuid();
-            this.Given(g => _AssetApiFixture.GivenTheAssetExists(AssetId))
+            this.Given(g => _assetApiFixture.GivenTheAssetExists(AssetId))
                 .When(w => _steps.WhenTheFunctionIsTriggered(AssetId, EventTypes.AssetCreatedEvent))
                 .When(w => _steps.WhenTheFunctionIsTriggered(AssetId, EventTypes.AssetUpdatedEvent))
-                .Then(t => _steps.ThenTheCorrelationIdWasUsedInTheApiCall(_AssetApiFixture.ReceivedCorrelationIds))
-                .Then(t => _steps.ThenTheIndexIsUpdatedWithTheAsset(_AssetApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
+                .Then(t => _steps.ThenTheCorrelationIdWasUsedInTheApiCall(_assetApiFixture.ReceivedCorrelationIds))
+                .Then(t => _steps.ThenTheIndexIsUpdatedWithTheAsset(_assetApiFixture.ResponseObject, _esFixture.ElasticSearchClient))
                 .BDDfy();
         }
     }
