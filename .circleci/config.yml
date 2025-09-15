@@ -384,7 +384,7 @@ workflows:
       - permit-production-release:
           type: approval
           requires:
-            - deploy-to-staging
+            # - deploy-to-staging
             - terraform-apply-production
           filters:
             branches:
