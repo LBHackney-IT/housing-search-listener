@@ -65,7 +65,7 @@ resource "aws_sqs_queue" "housing_search_dead_letter_queue" {
   name                              = "housingsearchdeadletterqueue.fifo"
   fifo_queue                        = true
   content_based_deduplication       = true
-  kms_master_key_id                 = "alias/housing-production-cmk"
+  kms_master_key_id                 = "alias/lbh-backup-key"
   kms_data_key_reuse_period_seconds = 300
 }
 
@@ -73,7 +73,7 @@ resource "aws_sqs_queue" "housing_search_listener_queue" {
   name                              = "housingsearchqueue.fifo"
   fifo_queue                        = true
   content_based_deduplication       = true
-  kms_master_key_id                 = "alias/housing-production-cmk"
+  kms_master_key_id                 = "alias/lbh-backup-key"
   kms_data_key_reuse_period_seconds = 300
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.housing_search_dead_letter_queue.arn,
