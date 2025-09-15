@@ -50,7 +50,7 @@ data "aws_ssm_parameter" "contracts_sns_topic_arn" {
 
 terraform {
   backend "s3" {
-    bucket  = "terraform-state-housing-production"
+    bucket  = "terraform-state-disaster-recovery"
     encrypt = true
     region  = "eu-west-2"
     key     = "services/housing-search-listener/state"
@@ -165,52 +165,53 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
   POLICY
 }
 
-resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_person_sns" {
-  topic_arn            = data.aws_ssm_parameter.person_sns_topic_arn.value
-  protocol             = "sqs"
-  endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
-  raw_message_delivery = true
-}
+# resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_person_sns" {
+#   topic_arn            = data.aws_ssm_parameter.person_sns_topic_arn.value
+#   protocol             = "sqs"
+#   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
+#   raw_message_delivery = true
+# }
 
-resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_tenure_sns" {
-  topic_arn            = data.aws_ssm_parameter.tenure_sns_topic_arn.value
-  protocol             = "sqs"
-  endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
-  raw_message_delivery = true
-}
+# resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_tenure_sns" {
+#   topic_arn            = data.aws_ssm_parameter.tenure_sns_topic_arn.value
+#   protocol             = "sqs"
+#   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
+#   raw_message_delivery = true
+# }
 
-resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_accounts_sns" {
-  topic_arn            = data.aws_ssm_parameter.accounts_sns_topic_arn.value
-  protocol             = "sqs"
-  endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
-  raw_message_delivery = true
-}
+# resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_accounts_sns" {
+#   topic_arn            = data.aws_ssm_parameter.accounts_sns_topic_arn.value
+#   protocol             = "sqs"
+#   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
+#   raw_message_delivery = true
+# }
 
-resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_asset_sns" {
-  topic_arn            = data.aws_ssm_parameter.asset_sns_topic_arn.value
-  protocol             = "sqs"
-  endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
-  raw_message_delivery = true
-}
+# resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_asset_sns" {
+#   topic_arn            = data.aws_ssm_parameter.asset_sns_topic_arn.value
+#   protocol             = "sqs"
+#   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
+#   raw_message_delivery = true
+# }
 
-resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_processes_sns" {
-  topic_arn            = data.aws_ssm_parameter.processes_sns_topic_arn.value
-  protocol             = "sqs"
-  endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
-  raw_message_delivery = true
-}
+# resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_processes_sns" {
+#   topic_arn            = data.aws_ssm_parameter.processes_sns_topic_arn.value
+#   protocol             = "sqs"
+#   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
+#   raw_message_delivery = true
+# }
 
-resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_contracts_sns" {
-  topic_arn            = data.aws_ssm_parameter.contracts_sns_topic_arn.value
-  protocol             = "sqs"
-  endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
-  raw_message_delivery = true
-}
+# resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_contracts_sns" {
+#   topic_arn            = data.aws_ssm_parameter.contracts_sns_topic_arn.value
+#   protocol             = "sqs"
+#   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
+#   raw_message_delivery = true
+# }
 
 resource "aws_ssm_parameter" "housing_search_listeners_sqs_queue_arn" {
-  name  = "/sqs-queue/production/housing_search_listener_queue/arn"
-  type  = "String"
-  value = aws_sqs_queue.housing_search_listener_queue.arn
+  name      = "/sqs-queue/production/housing_search_listener_queue/arn"
+  type      = "String"
+  value     = aws_sqs_queue.housing_search_listener_queue.arn
+  overwrite = true
 }
 
 module "housing_search_listener_cw_dashboard" {
