@@ -24,29 +24,29 @@ data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
 
-data "aws_ssm_parameter" "person_sns_topic_arn" {
-  name = "/sns-topic/production/person/arn"
-}
+# data "aws_ssm_parameter" "person_sns_topic_arn" {
+#   name = "/sns-topic/production/person/arn"
+# }
 
-data "aws_ssm_parameter" "tenure_sns_topic_arn" {
-  name = "/sns-topic/production/tenure/arn"
-}
+# data "aws_ssm_parameter" "tenure_sns_topic_arn" {
+#   name = "/sns-topic/production/tenure/arn"
+# }
 
-data "aws_ssm_parameter" "accounts_sns_topic_arn" {
-  name = "/sns-topic/production/accounts/arn"
-}
+# data "aws_ssm_parameter" "accounts_sns_topic_arn" {
+#   name = "/sns-topic/production/accounts/arn"
+# }
 
-data "aws_ssm_parameter" "asset_sns_topic_arn" {
-  name = "/sns-topic/production/asset/arn"
-}
+# data "aws_ssm_parameter" "asset_sns_topic_arn" {
+#   name = "/sns-topic/production/asset/arn"
+# }
 
-data "aws_ssm_parameter" "processes_sns_topic_arn" {
-  name = "/sns-topic/production/processes/arn"
-}
+# data "aws_ssm_parameter" "processes_sns_topic_arn" {
+#   name = "/sns-topic/production/processes/arn"
+# }
 
-data "aws_ssm_parameter" "contracts_sns_topic_arn" {
-  name = "/sns-topic/production/contracts/arn"
-}
+# data "aws_ssm_parameter" "contracts_sns_topic_arn" {
+#   name = "/sns-topic/production/contracts/arn"
+# }
 
 terraform {
   backend "s3" {
@@ -81,89 +81,89 @@ resource "aws_sqs_queue" "housing_search_listener_queue" {
   })
 }
 
-resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
-  queue_url = aws_sqs_queue.housing_search_listener_queue.id
-  policy    = <<POLICY
-  {
-        "Version": "2012-10-17",
-        "Id": "sqspolicy",
-        "Statement": [
-        {
-            "Sid": "First",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
-            "Condition": {
-                "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.person_sns_topic_arn.value}"
-                }
-            }
-        },
-        {
-            "Sid": "Second",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
-            "Condition": {
-                "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.tenure_sns_topic_arn.value}"
-                }
-            }
-        },
-        {
-            "Sid": "Third",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
-            "Condition": {
-                "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.accounts_sns_topic_arn.value}"
-                }
-            }
-        },
-        {
-            "Sid": "Fourth",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
-            "Condition": {
-                "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.asset_sns_topic_arn.value}"
-                }
-            }
-        },
-                {
-            "Sid": "Fifth",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
-            "Condition": {
-                "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.processes_sns_topic_arn.value}"
-                }
-            }
-        },
-        {
-            "Sid": "Seventh",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "sqs:SendMessage",
-            "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
-            "Condition": {
-                "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.contracts_sns_topic_arn.value}"
-                }
-            }
-        }				
-      ]
-  }
-  POLICY
-}
+# resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
+#   queue_url = aws_sqs_queue.housing_search_listener_queue.id
+#   policy    = <<POLICY
+#   {
+#         "Version": "2012-10-17",
+#         "Id": "sqspolicy",
+#         "Statement": [
+#         {
+#             "Sid": "First",
+#             "Effect": "Allow",
+#             "Principal": "*",
+#             "Action": "sqs:SendMessage",
+#             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
+#             "Condition": {
+#                 "ArnEquals": {
+#                     "aws:SourceArn": "${data.aws_ssm_parameter.person_sns_topic_arn.value}"
+#                 }
+#             }
+#         },
+#         {
+#             "Sid": "Second",
+#             "Effect": "Allow",
+#             "Principal": "*",
+#             "Action": "sqs:SendMessage",
+#             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
+#             "Condition": {
+#                 "ArnEquals": {
+#                     "aws:SourceArn": "${data.aws_ssm_parameter.tenure_sns_topic_arn.value}"
+#                 }
+#             }
+#         },
+#         {
+#             "Sid": "Third",
+#             "Effect": "Allow",
+#             "Principal": "*",
+#             "Action": "sqs:SendMessage",
+#             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
+#             "Condition": {
+#                 "ArnEquals": {
+#                     "aws:SourceArn": "${data.aws_ssm_parameter.accounts_sns_topic_arn.value}"
+#                 }
+#             }
+#         },
+#         {
+#             "Sid": "Fourth",
+#             "Effect": "Allow",
+#             "Principal": "*",
+#             "Action": "sqs:SendMessage",
+#             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
+#             "Condition": {
+#                 "ArnEquals": {
+#                     "aws:SourceArn": "${data.aws_ssm_parameter.asset_sns_topic_arn.value}"
+#                 }
+#             }
+#         },
+#                 {
+#             "Sid": "Fifth",
+#             "Effect": "Allow",
+#             "Principal": "*",
+#             "Action": "sqs:SendMessage",
+#             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
+#             "Condition": {
+#                 "ArnEquals": {
+#                     "aws:SourceArn": "${data.aws_ssm_parameter.processes_sns_topic_arn.value}"
+#                 }
+#             }
+#         },
+#         {
+#             "Sid": "Seventh",
+#             "Effect": "Allow",
+#             "Principal": "*",
+#             "Action": "sqs:SendMessage",
+#             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
+#             "Condition": {
+#                 "ArnEquals": {
+#                     "aws:SourceArn": "${data.aws_ssm_parameter.contracts_sns_topic_arn.value}"
+#                 }
+#             }
+#         }				
+#       ]
+#   }
+#   POLICY
+# }
 
 # resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_person_sns" {
 #   topic_arn            = data.aws_ssm_parameter.person_sns_topic_arn.value
