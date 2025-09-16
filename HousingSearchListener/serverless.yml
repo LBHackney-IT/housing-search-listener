@@ -19,7 +19,7 @@ functions:
     handler: HousingSearchListener::HousingSearchListener.HousingSearchListener::FunctionHandler
     role: lambdaExecutionRole
     environment:            
-      ELASTICSEARCH_DOMAIN_URL: ${ssm:/housing-search-api/${self:provider.stage}/elasticsearch-domain}
+      # ELASTICSEARCH_DOMAIN_URL: ${ssm:/housing-search-api/${self:provider.stage}/elasticsearch-domain}
       PersonApiUrl: ${ssm:/housing-tl/${self:provider.stage}/person-api-url}
       PersonApiToken: ${ssm:/housing-tl/${self:provider.stage}/person-api-token}
       TenureApiUrl: ${ssm:/housing-tl/${self:provider.stage}/tenure-api-url}
