@@ -34,8 +34,8 @@ functions:
       ProcessesApiToken: ${ssm:/housing-tl/${self:provider.stage}/processes-api-token}
       ContractApiUrl: ${ssm:/housing-tl/${self:provider.stage}/contract-api-url}
       ContractApiToken: ${ssm:/housing-tl/${self:provider.stage}/contract-api-token} 
-    events:
-      - sqs: ${ssm:/sqs-queue/${self:provider.stage}/housing_search_listener_queue/arn}
+    # events:
+    #   - sqs: ${ssm:/sqs-queue/${self:provider.stage}/housing_search_listener_queue/arn}
 resources:
   Resources:
     LambdaSecurityGroup:
