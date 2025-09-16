@@ -48,14 +48,14 @@ data "aws_region" "current" {}
 # #   name = "/sns-topic/production/contracts/arn"
 # # }
 
-# terraform {
-#   backend "s3" {
-#     bucket  = "terraform-state-disaster-recovery"
-#     encrypt = true
-#     region  = "eu-west-2"
-#     key     = "services/housing-search-listener/state"
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket  = "terraform-state-disaster-recovery"
+    encrypt = true
+    region  = "eu-west-2"
+    key     = "services/housing-search-listener/state"
+  }
+}
 
 # locals {
 #   parameter_store = "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter"
