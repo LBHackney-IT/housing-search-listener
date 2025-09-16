@@ -126,7 +126,7 @@ commands:
           name: Deploy lambda
           command: |
             cd ./HousingSearchListener/
-            sls deploy --stage <<parameters.stage>> --conceal
+            sls remove --stage <<parameters.stage>> --verbose
 
 jobs:
   check-code-formatting:
