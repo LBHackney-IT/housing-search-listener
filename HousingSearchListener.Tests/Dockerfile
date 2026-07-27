@@ -13,10 +13,6 @@ WORKDIR /app
 
 RUN apk update && apk add --no-cache nodejs
 
-RUN apk update \
-    && apk upgrade --no-cache \
-    && apk add --no-cache openjdk21-jre
-
 RUN dotnet tool install --global dotnet-sonarscanner
 RUN dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.2.0
 
