@@ -25,8 +25,9 @@ RUN dotnet restore ./HousingSearchListener.Tests/HousingSearchListener.Tests.csp
 
 # Copy everything else and build
 COPY . .
-RUN dotnet build ./HousingSearchListener/HousingSearchListener.csproj
-RUN dotnet build ./HousingSearchListener.Tests/HousingSearchListener.Tests.csproj
+
+RUN dotnet build -c Release -o out HousingSearchListener/HousingSearchListener.csproj
+RUN dotnet build -c debug -o out HousingSearchListener.Tests/HousingSearchListener.Tests.csproj
 
 CMD if [ -n "$SONAR_TOKEN" ]; then \
       dotnet sonarscanner begin \
