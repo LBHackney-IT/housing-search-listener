@@ -11,14 +11,22 @@ ENV SONAR_TOKEN=$SONAR_TOKEN
 
 WORKDIR /app
 
-RUN apk update && apk add --no-cache nodejs
-
 RUN dotnet tool install --global dotnet-sonarscanner
 RUN dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.2.0
 
 ENV PATH="$PATH:/root/.dotnet/tools"
 
+# Copy csproj and nuget config and restore as distinct layers
+COPY HousingSearchListener/HousingSearchListener.csproj ./HousingSearchListener/
+COPY HousingSearchListener.Tests/HousingSearchListener.Tests.csproj ./HousingSearchListener.Tests/
+COPY /NuGet.Config /root/.nuget/NuGet/NuGet.Config
+RUN dotnet restore ./HousingSearchListener/HousingSearchListener.csproj
+RUN dotnet restore ./HousingSearchListener.Tests/HousingSearchListener.Tests.csproj
+
+# Copy everything else and build
 COPY . .
+RUN dotnet build ./HousingSearchListener/HousingSearchListener.csproj
+RUN dotnet build ./HousingSearchListener.Tests/HousingSearchListener.Tests.csproj
 
 CMD if [ -n "$SONAR_TOKEN" ]; then \
       dotnet sonarscanner begin \
