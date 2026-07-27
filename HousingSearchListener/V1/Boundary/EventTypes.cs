@@ -24,5 +24,7 @@ namespace HousingSearchListener.V1.Boundary
 
         public const string ContractCreatedEvent = "ContractCreatedEvent";
         public const string ContractUpdatedEvent = "ContractUpdatedEvent";
+        
+        public const string AddRepairsContractsToAssetEvent = "AddRepairsContractsToAssetEvent";
     }
 }
