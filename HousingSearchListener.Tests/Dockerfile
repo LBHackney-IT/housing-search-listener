@@ -25,6 +25,7 @@ CMD if [ -n "$SONAR_TOKEN" ]; then \
         /k:"LBHackney-IT_housing-search-listener" \
         /o:"lbhackney-it" \
         /d:sonar.host.url=https://sonarcloud.io \
+        /d:sonar.scm.disabled=true \
         /d:sonar.login="${SONAR_TOKEN}" && \
       dotnet test && \
       dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"; \
