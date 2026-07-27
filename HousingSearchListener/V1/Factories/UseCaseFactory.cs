@@ -81,6 +81,12 @@ namespace HousingSearchListener.V1.Factories
                         processor = serviceProvider.GetService<IAddOrUpdateContractInAssetUseCase>();
                         break;
                     }
+                // Unsupported event types
+                case EventTypes.AddRepairsContractsToAssetEvent:
+                    {
+                        Console.WriteLine($"Skipping unsupported event type: {entityEvent.EventType}");
+                        break;
+                    }
                 default:
                     throw new ArgumentException($"Unknown event type: {entityEvent.EventType}");
             }
