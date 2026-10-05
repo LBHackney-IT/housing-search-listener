@@ -47,8 +47,9 @@ namespace HousingSearchListener.V1.UseCase
                 .GetAssetByIdAsync(message.EntityId, message.CorrelationId)
                 .ConfigureAwait(false) ?? throw new EntityNotFoundException<QueryableAsset>(message.EntityId);
 
-            // 2 & 3. Only fetch contracts for BTA (Book Temporary Accommodation) properties
-            if (asset.AssetManagement?.IsTemporaryAccomodation is true)
+            // 2 & 3. Only fetch contracts for TA (Temporary Accommodation) properties
+            var isTemporaryAccommodation = asset.AssetManagement?.IsTemporaryAccomodation ?? false;
+            if (isTemporaryAccommodation)
             {
                 var allContracts = await _contractApiGateway
                     .GetContractsByAssetIdAsync(message.EntityId, message.CorrelationId)
@@ -92,7 +93,7 @@ namespace HousingSearchListener.V1.UseCase
 
         private List<QueryableCharges> MapCharges(Contract assetContract)
         {
-            if (!assetContract.Charges.Any()) return null;
+            if (!assetContract.Charges.Any()) return new List<QueryableCharges>();
 
             _logger.LogInformation("{AssetChargesCount} charges found.", assetContract.Charges.Count());
             var charges = new List<QueryableCharges>();
@@ -113,7 +114,7 @@ namespace HousingSearchListener.V1.UseCase
 
         private List<QueryableRelatedPeople> MapRelatedPeople(Contract assetContract)
         {
-            if (!assetContract.RelatedPeople.Any()) return null;
+            if (!assetContract.RelatedPeople.Any()) return new List<QueryableRelatedPeople>();
 
             _logger.LogInformation("{RelatedPeopleCount} related people found.", assetContract.RelatedPeople.Count());
             var relatedPeople = new List<QueryableRelatedPeople>();
