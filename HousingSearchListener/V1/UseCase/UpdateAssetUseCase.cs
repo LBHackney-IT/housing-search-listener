@@ -46,7 +46,7 @@ namespace HousingSearchListener.V1.UseCase
                 .ConfigureAwait(false) ?? throw new EntityNotFoundException<QueryableAsset>(message.EntityId);
 
             // 2 & 3. Only fetch contracts for BTA (Book Temporary Accommodation) properties
-            if (asset.AssetManagement?.IsTemporaryAccomodation == true)
+            if (asset.AssetManagement?.IsTemporaryAccomodation)
             {
                 var allContracts = await _contractApiGateway
                     .GetContractsByAssetIdAsync(message.EntityId, message.CorrelationId)
