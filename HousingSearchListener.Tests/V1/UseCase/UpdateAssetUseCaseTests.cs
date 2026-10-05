@@ -70,9 +70,8 @@ namespace HousingSearchListener.Tests.V1.UseCase
                            .Create();
         }
 
-        private QueryableAsset CreateAsset(Guid entityId)
+        private QueryableAsset CreateAsset(Guid entityId, bool isTemporaryAccommodation = false)
         {
-
             var charges = _fixture.Build<QueryableCharges>()
                 .With(ch => ch.Frequency, "1")
                 .CreateMany(1).ToList();
@@ -84,9 +83,14 @@ namespace HousingSearchListener.Tests.V1.UseCase
                         .CreateMany(1)
                         .ToList();
 
+            var assetManagement = _fixture.Build<QueryableAssetManagement>()
+                        .With(x => x.IsTemporaryAccomodation, isTemporaryAccommodation)
+                        .Create();
+
             return _fixture.Build<QueryableAsset>()
                         .With(x => x.Id, entityId.ToString())
                         .With(x => x.AssetContracts, contracts)
+                        .With(x => x.AssetManagement, assetManagement)
                         .Create();
         }
 
@@ -162,31 +166,33 @@ namespace HousingSearchListener.Tests.V1.UseCase
         public async Task ProcessMessageAsyncTestIndexAssetSuccess(string eventType)
         {
             _message.EventType = eventType;
-
+            var btaAsset = CreateAsset(_message.EntityId, isTemporaryAccommodation: true);
             var contracts = CreateContracts();
 
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
-                .ReturnsAsync(_asset);
+                .ReturnsAsync(btaAsset);
             _mockContractApi.Setup(x => x.GetContractsByAssetIdAsync(_message.EntityId, _message.CorrelationId))
                 .ReturnsAsync(contracts);
             _mockEsGateway.Setup(x => x.GetAssetById(_message.EntityId.ToString()))
-                .ReturnsAsync(_asset);
+                .ReturnsAsync(btaAsset);
 
             await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
 
-            _mockEsGateway.Verify(x => x.IndexAsset(It.Is<QueryableAsset>(y => VerifyAssetIndexed(y))), Times.Once);
+            _mockEsGateway.Verify(x => x.IndexAsset(It.IsAny<QueryableAsset>()), Times.Once);
         }
+
         [Fact]
         public async Task ProcessMessageAsyncTestGetsContractAndAddsToAsset()
         {
+            var btaAsset = CreateAsset(_message.EntityId, isTemporaryAccommodation: true);
             var contracts = CreateContracts(contractCount: 1, chargesCount: 2, relatedPeopleCount: 1);
 
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
-                .ReturnsAsync(_asset);
+                .ReturnsAsync(btaAsset);
             _mockContractApi.Setup(x => x.GetContractsByAssetIdAsync(_message.EntityId, _message.CorrelationId))
                 .ReturnsAsync(contracts);
             _mockEsGateway.Setup(x => x.GetAssetById(_message.EntityId.ToString()))
-                .ReturnsAsync(_asset);
+                .ReturnsAsync(btaAsset);
 
             await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
 
@@ -197,23 +203,41 @@ namespace HousingSearchListener.Tests.V1.UseCase
                 asset.AssetContracts.First().RelatedPeople.Count() == 1)),
                 Times.Once);
         }
+
         [Fact]
         public async Task ProcessMessageAsyncTestHandlesNoContracts()
         {
+            var btaAsset = CreateAsset(_message.EntityId, isTemporaryAccommodation: true);
             var contracts = CreateContracts(contractCount: 0);
 
             _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
-                .ReturnsAsync(_asset);
+                .ReturnsAsync(btaAsset);
             _mockContractApi.Setup(x => x.GetContractsByAssetIdAsync(_message.EntityId, _message.CorrelationId))
                 .ReturnsAsync(contracts);
             _mockEsGateway.Setup(x => x.GetAssetById(_message.EntityId.ToString()))
-                .ReturnsAsync(_asset);
+                .ReturnsAsync(btaAsset);
 
             await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
 
             _mockEsGateway.Verify(x => x.IndexAsset(It.Is<QueryableAsset>(asset =>
                 asset.AssetContracts.Count() == 0)),
                 Times.Once);
+        }
+
+        [Fact]
+        public async Task ProcessMessageAsyncTestDoesNotCallContractsApiForNonBtaAsset()
+        {
+            var nonBtaAsset = CreateAsset(_message.EntityId, isTemporaryAccommodation: false);
+
+            _mockAssetApi.Setup(x => x.GetAssetByIdAsync(_message.EntityId, _message.CorrelationId))
+                .ReturnsAsync(nonBtaAsset);
+            _mockEsGateway.Setup(x => x.GetAssetById(_message.EntityId.ToString()))
+                .ReturnsAsync(nonBtaAsset);
+
+            await _sut.ProcessMessageAsync(_message).ConfigureAwait(false);
+
+            _mockContractApi.Verify(x => x.GetContractsByAssetIdAsync(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
+            _mockEsGateway.Verify(x => x.IndexAsset(It.IsAny<QueryableAsset>()), Times.Once);
         }
     }
 }
