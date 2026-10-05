@@ -10,6 +10,7 @@ using Hackney.Core.Sns;
 using HousingSearchListener.V1.Gateway.Interfaces;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using Hackney.Shared.HousingSearch.Gateways.Models.Contract;
+using Hackney.Shared.HousingSearch.Domain.Contract;
 using Microsoft.Extensions.Logging;
 
 namespace HousingSearchListener.V1.UseCase
