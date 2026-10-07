@@ -16,7 +16,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using EventTypes = HousingSearchListener.V1.Boundary.EventTypes;
-using Microsoft.Extensions.Logging;
 
 
 namespace HousingSearchListener.Tests.V1.UseCase
@@ -37,8 +36,6 @@ namespace HousingSearchListener.Tests.V1.UseCase
 
         private readonly Mock<IContractApiGateway> _mockContractApi;
 
-        private readonly Mock<ILogger<UpdateAssetUseCase>> _mockLogger;
-
         private static readonly Guid _correlationId = Guid.NewGuid();
 
 
@@ -50,13 +47,12 @@ namespace HousingSearchListener.Tests.V1.UseCase
             _mockAssetApi = new Mock<IAssetApiGateway>();
             _mockEsGateway = new Mock<IEsGateway>();
             _mockContractApi = new Mock<IContractApiGateway>();
-            _mockLogger = new Mock<ILogger<UpdateAssetUseCase>>();
             _esEntityFactory = new ESEntityFactory();
             _create = new IndexCreateAssetUseCase(_mockEsGateway.Object,
                 _mockAssetApi.Object, _esEntityFactory);
 
             _sut = new UpdateAssetUseCase(_mockEsGateway.Object,
-                _mockAssetApi.Object, _mockContractApi.Object, _esEntityFactory, _mockLogger.Object);
+                _mockAssetApi.Object, _mockContractApi.Object, _esEntityFactory);
 
             _message = CreateMessage();
             _asset = CreateAsset(_message.EntityId);
