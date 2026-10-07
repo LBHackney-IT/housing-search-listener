@@ -1,3 +1,5 @@
+using Hackney.Core.DynamoDb;
+using Hackney.Shared.HousingSearch.Domain.Contract;
 using Hackney.Shared.HousingSearch.Gateways.Models.Assets;
 using Hackney.Shared.HousingSearch.Gateways.Models.Contract;
 using Hackney.Shared.HousingSearch.Gateways.Models.Persons;
@@ -296,6 +298,55 @@ namespace HousingSearchListener.V1.Factories
             }
 
             return queryableAsset;
+        }
+
+        public List<QueryableAssetContract> CreateAssetContracts(PagedResult<Contract> allContracts)
+        {
+            var assetContracts = new List<QueryableAssetContract>();
+            foreach (var contract in allContracts.Results.Where(x => x?.EndReason != "ContractNoLongerNeeded"))
+            {
+                assetContracts.Add(new QueryableAssetContract
+                {
+                    Id = contract.Id,
+                    TargetId = contract.TargetId,
+                    TargetType = contract.TargetType,
+                    EndDate = contract.EndDate,
+                    EndReason = contract.EndReason,
+                    ApprovalStatus = contract.ApprovalStatus,
+                    ApprovalStatusReason = contract.ApprovalStatusReason,
+                    IsActive = contract.IsActive,
+                    ApprovalDate = contract.ApprovalDate,
+                    StartDate = contract.StartDate,
+                    Charges = CreateQueryableCharges(contract),
+                    RelatedPeople = CreateQueryableRelatedPeople(contract)
+                });
+            }
+            return assetContracts;
+        }
+
+        private static List<QueryableCharges> CreateQueryableCharges(Contract contract)
+        {
+            if (!contract.Charges.Any()) return new List<QueryableCharges>();
+            return contract.Charges.Select(charge => new QueryableCharges
+            {
+                Id = charge.Id,
+                Type = charge.Type,
+                SubType = charge.SubType,
+                Frequency = charge.Frequency,
+                Amount = charge.Amount
+            }).ToList();
+        }
+
+        private static List<QueryableRelatedPeople> CreateQueryableRelatedPeople(Contract contract)
+        {
+            if (!contract.RelatedPeople.Any()) return new List<QueryableRelatedPeople>();
+            return contract.RelatedPeople.Select(person => new QueryableRelatedPeople
+            {
+                Id = person.Id,
+                Type = person.Type,
+                SubType = person.SubType,
+                Name = person.Name
+            }).ToList();
         }
     }
 }
