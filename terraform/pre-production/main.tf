@@ -11,24 +11,9 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-data "aws_ssm_parameter" "person_sns_topic_arn" {
-  name = "/sns-topic/pre-production/person/arn"
-}
-
-data "aws_ssm_parameter" "tenure_sns_topic_arn" {
-  name = "/sns-topic/pre-production/tenure/arn"
-}
-
-data "aws_ssm_parameter" "accounts_sns_topic_arn" {
-  name = "/sns-topic/pre-production/accounts/arn"
-}
-
-data "aws_ssm_parameter" "asset_sns_topic_arn" {
-  name = "/sns-topic/pre-production/asset/arn"
-}
-
-data "aws_ssm_parameter" "contracts_sns_topic_arn" {
-  name = "/sns-topic/pre-production/contracts/arn"
+locals {
+  # These topic parameters have already been removed. A destroy plan must not read them.
+  sns_topic_arn = "arn:aws:sns:eu-west-2:000000000000:removed"
 }
 
 terraform {
@@ -76,7 +61,7 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
             "Condition": {
                 "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.person_sns_topic_arn.value}"
+                    "aws:SourceArn": "${local.sns_topic_arn}"
                 }
             }
         },
@@ -88,7 +73,7 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
             "Condition": {
                 "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.tenure_sns_topic_arn.value}"
+                    "aws:SourceArn": "${local.sns_topic_arn}"
                 }
             }
         },
@@ -100,7 +85,7 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
             "Condition": {
                 "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.accounts_sns_topic_arn.value}"
+                    "aws:SourceArn": "${local.sns_topic_arn}"
                 }
             }
         },
@@ -112,7 +97,7 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
             "Condition": {
                 "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.asset_sns_topic_arn.value}"
+                    "aws:SourceArn": "${local.sns_topic_arn}"
                 }
             }
         },
@@ -124,7 +109,7 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
             "Resource": "${aws_sqs_queue.housing_search_listener_queue.arn}",
             "Condition": {
                 "ArnEquals": {
-                    "aws:SourceArn": "${data.aws_ssm_parameter.contracts_sns_topic_arn.value}"
+                    "aws:SourceArn": "${local.sns_topic_arn}"
                 }
             }
         }				
@@ -134,35 +119,35 @@ resource "aws_sqs_queue_policy" "housing_search_listener_queue_policy" {
 }
 
 resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_person_sns" {
-  topic_arn            = data.aws_ssm_parameter.person_sns_topic_arn.value
+  topic_arn            = local.sns_topic_arn
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
   raw_message_delivery = true
 }
 
 resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_tenure_sns" {
-  topic_arn            = data.aws_ssm_parameter.tenure_sns_topic_arn.value
+  topic_arn            = local.sns_topic_arn
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
   raw_message_delivery = true
 }
 
 resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_accounts_sns" {
-  topic_arn            = data.aws_ssm_parameter.accounts_sns_topic_arn.value
+  topic_arn            = local.sns_topic_arn
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
   raw_message_delivery = true
 }
 
 resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_asset_sns" {
-  topic_arn            = data.aws_ssm_parameter.asset_sns_topic_arn.value
+  topic_arn            = local.sns_topic_arn
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
   raw_message_delivery = true
 }
 
 resource "aws_sns_topic_subscription" "housing_search_listener_queue_subscribe_to_contracts_sns" {
-  topic_arn            = data.aws_ssm_parameter.contracts_sns_topic_arn.value
+  topic_arn            = local.sns_topic_arn
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.housing_search_listener_queue.arn
   raw_message_delivery = true
